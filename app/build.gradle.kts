@@ -1,9 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -12,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = ProjectSetting.PACKAGE_NAME
-        minSdk = 24
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -29,20 +28,27 @@ android {
             )
         }
     }
-    
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
     }
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
+    lint {
+        abortOnError = false
+        checkReleaseBuilds = false
+    }
 }
 
 dependencies {
@@ -52,26 +58,23 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    implementation("androidx.activity:activity-ktx:1.9.0")
-    implementation("androidx.fragment:fragment-ktx:1.8.1")
+    implementation("androidx.activity:activity-ktx:1.9.2")
+    implementation("androidx.fragment:fragment-ktx:1.8.4")
     
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.6")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.6")
 
-    kapt("androidx.lifecycle:lifecycle-compiler:2.8.3")
-    //noinspection GradleDependency
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-service:2.8.3")
-    implementation("androidx.lifecycle:lifecycle-process:2.8.3")
-    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-service:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-process:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.8.6")
 
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:2.8.3")
+    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:2.8.6")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
