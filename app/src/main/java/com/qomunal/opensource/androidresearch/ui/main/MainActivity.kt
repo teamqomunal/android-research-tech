@@ -22,7 +22,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initUI() {
         binding.apply {
-
+            btnTest.setOnClickListener {
+                // TODO your work
+            }
         }
     }
 
