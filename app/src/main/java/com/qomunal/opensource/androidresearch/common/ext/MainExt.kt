@@ -1,5 +1,8 @@
 package com.qomunal.opensource.androidresearch.common.ext
 
+import android.content.Context
+import android.widget.Toast
+
 /**
  * Created by faisalamircs on 13/01/2024
  * -----------------------------------------
@@ -9,4 +12,6 @@ package com.qomunal.opensource.androidresearch.common.ext
  * -----------------------------------------
  */
 
-
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
