@@ -10,6 +10,7 @@
 
 object ProjectSetting {
 
+    const val NAME_APP = "Research"
     const val PACKAGE_NAME = "com.qomunal.opensource.androidresearch"
 
     // Version App
@@ -23,8 +24,8 @@ object ProjectSetting {
     // Default Setting - Do Not Change
     // ---------------------------------------------------------------------------------------------
 
-    const val MIN_SDK = 21
-    const val COMPILE_SDK = 34
+    const val MIN_SDK = 23
+    const val COMPILE_SDK = 36
 
     const val TARGET_SDK = COMPILE_SDK
     const val VERSION_NAME = "$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH"

@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.text.SimpleDateFormat
+import java.util.Date
 
 plugins {
     alias(libs.plugins.android.application)
@@ -7,16 +9,26 @@ plugins {
     id("kotlin-parcelize")
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas") // If Using Ksp
+}
+
+base {
+    // Naming APK // AAB
+    val timestamp = SimpleDateFormat("dd-MM-yyyy_hh-mm").format(Date())
+    archivesName = "${ProjectSetting.NAME_APP}-${ProjectSetting.VERSION_CODE}-[${ProjectSetting.VERSION_NAME}]-$timestamp"
+}
+
 android {
     namespace = ProjectSetting.PACKAGE_NAME
-    compileSdk = 36
+    compileSdk = ProjectSetting.COMPILE_SDK
 
     defaultConfig {
         applicationId = ProjectSetting.PACKAGE_NAME
-        minSdk = 23
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = ProjectSetting.MIN_SDK
+        targetSdk = ProjectSetting.TARGET_SDK
+        versionCode = ProjectSetting.VERSION_CODE
+        versionName = ProjectSetting.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,6 +76,7 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.androidx.room.runtime)
+    implementation(libs.play.services.measurement.api)
     testImplementation(libs.junit.jupiter)
 
     // To use Kotlin annotation processing tool (kapt)
@@ -93,6 +106,14 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.flexbox)
 
+    // CameraX core library using camera2 implementation
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+
     // Glide
     implementation(libs.glide)
 
@@ -118,7 +139,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.firebase.crashlytics.ktx)
-    implementation("com.google.firebase:firebase-auth-ktx") {
+    implementation("com.google.firebase:firebase-auth") {
         exclude("", "play-services-safetynet")
     }
     implementation(libs.firebase.messaging)
@@ -155,11 +176,19 @@ dependencies {
 
     implementation(libs.customactivityoncrash)
 
-    implementation(libs.code.scanner)
-    implementation(libs.zxing.android.embedded)
+    implementation(libs.zxing.core)
+
+    implementation(libs.zxing.android.embedded) {
+        exclude(
+            group = "com.google.zxing",
+            module = "core"
+        )
+    }
+
     implementation(libs.monthyear.picker)
 
     implementation(libs.markwon)
+    implementation(libs.jodaTime)
 
     implementation(libs.fastadapter)
     implementation(libs.fastadapter.extensions.expandable)
