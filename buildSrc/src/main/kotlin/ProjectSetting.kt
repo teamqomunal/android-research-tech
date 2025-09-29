@@ -24,7 +24,7 @@ object ProjectSetting {
     // Default Setting - Do Not Change
     // ---------------------------------------------------------------------------------------------
 
-    const val MIN_SDK = 23
+    const val MIN_SDK = 24
     const val COMPILE_SDK = 36
 
     const val TARGET_SDK = COMPILE_SDK
